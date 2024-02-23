@@ -63,6 +63,9 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jl_Jugadores = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jm_Modificar = new javax.swing.JMenuItem();
+        jm_Eliminar = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -305,6 +308,11 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jT_equipos);
 
         jl_Jugadores.setModel(new DefaultListModel());
+        jl_Jugadores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jl_JugadoresMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jl_Jugadores);
 
         jButton1.setText("Transeferencia >");
@@ -353,6 +361,27 @@ public class Boroa_Legacy extends javax.swing.JFrame {
             jd_TransferirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        jm_Modificar.setText("Modificar");
+        jm_Modificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jm_ModificarMouseClicked(evt);
+            }
+        });
+        jPopupMenu1.add(jm_Modificar);
+
+        jm_Eliminar.setText("Eliminar");
+        jm_Eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jm_EliminarMouseClicked(evt);
+            }
+        });
+        jm_Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_EliminarActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jm_Eliminar);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 255, 255));
@@ -571,6 +600,43 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jb_CrearjugadoresActionPerformed
 
+    private void jl_JugadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_JugadoresMouseClicked
+        if(jl_Jugadores.getSelectedIndex()>=0){
+        if(evt.getButton() ==3){
+            jPopupMenu1.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+        }
+    }//GEN-LAST:event_jl_JugadoresMouseClicked
+
+    private void jm_ModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_ModificarMouseClicked
+        DefaultListModel modelo=(DefaultListModel)jl_Jugadores.getModel();
+        String nombre=JOptionPane.showInputDialog(jd_Transferir,"Ingrese el nuevo nombre");
+          if(numero(nombre)==false){
+            JOptionPane.showMessageDialog(jd_Transferir, "Hay un numero");
+        }else{
+              ((Jugador)modelo.get(jl_Jugadores.getSelectedIndex())).setNombre(nombre);
+              
+        }
+        String edadtemp = JOptionPane.showInputDialog(jd_Transferir,"Ingrese el nuevo nombre");
+        if(caracter(edadtemp)==false){
+            JOptionPane.showMessageDialog(jd_Transferir, "Hay un caracter");
+        }else{
+            int edad=Integer.parseInt(edadtemp);
+            ((Jugador)modelo.get(jl_Jugadores.getSelectedIndex())).setEdad(edad);
+        }
+        jl_Jugadores.setModel(modelo);
+    }//GEN-LAST:event_jm_ModificarMouseClicked
+
+    private void jm_EliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_EliminarMouseClicked
+       DefaultListModel modelo=(DefaultListModel)jl_Jugadores.getModel();
+       modelo.remove(jl_Jugadores.getSelectedIndex());
+       jl_Jugadores.setModel(modelo);
+    }//GEN-LAST:event_jm_EliminarMouseClicked
+
+    private void jm_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_EliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jm_EliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -628,6 +694,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTree jT_equipos;
@@ -644,6 +711,8 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     private javax.swing.JList<String> jl_Jugadores;
     private javax.swing.JMenuItem jm_Cequipos;
     private javax.swing.JMenuItem jm_Cjugadores;
+    private javax.swing.JMenuItem jm_Eliminar;
+    private javax.swing.JMenuItem jm_Modificar;
     private javax.swing.JMenuItem jm_Transferencia;
     private javax.swing.JSpinner js_Edad;
     private javax.swing.JTextField jt_Ciudad;
@@ -660,8 +729,14 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         }
         return true;
     }
-     //"^\\d+$" regex letras
+    public boolean caracter(String edad){
+        Pattern pattern =Pattern.compile("^\\d+$");
+        Matcher matcher=pattern.matcher(edad);
+        if(matcher.find()){
+            return false;
+        }
+        return true;
+    }
     DefaultMutableTreeNode nodo_seleccionado;
- Jugador jugador_selec;
  Equipos equipo_selec;   
 }

@@ -17,6 +17,12 @@ public class Jugador {
         this.edad = edad;
     }
 
+    public Jugador(String nombre, int edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+    
+
     public Jugador() {
     }
 

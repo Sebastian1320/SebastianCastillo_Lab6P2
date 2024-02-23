@@ -45,17 +45,17 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jt_nombrej = new javax.swing.JTextField();
         js_Edad = new javax.swing.JSpinner();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jc_posicion = new javax.swing.JComboBox<>();
         jb_Crearjug = new javax.swing.JButton();
         jd_Transferir = new javax.swing.JDialog();
         jPanel4 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        jt_equipos = new javax.swing.JTree();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jl_Jugadores = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -196,13 +196,18 @@ public class Boroa_Legacy extends javax.swing.JFrame {
 
         js_Edad.setModel(new javax.swing.SpinnerNumberModel(15, 15, 45, 1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Portero", "Defensa", "Mediocampista", "Delantero", " " }));
+        jc_posicion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Portero", "Defensa", "Mediocampista", "Delantero", " " }));
 
         jb_Crearjug.setBackground(new java.awt.Color(51, 255, 204));
         jb_Crearjug.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jb_Crearjug.setForeground(new java.awt.Color(0, 0, 0));
         jb_Crearjug.setText("Agregar");
         jb_Crearjug.setBorder(null);
+        jb_Crearjug.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_CrearjugMouseClicked(evt);
+            }
+        });
         jb_Crearjug.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_CrearjugActionPerformed(evt);
@@ -216,7 +221,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jc_posicion, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(112, 112, 112)
@@ -226,7 +231,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
                                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jt_nombrej, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(js_Edad, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(215, 215, 215)
@@ -247,7 +252,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
                 .addGap(49, 49, 49)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(113, 113, 113)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jt_nombrej, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -255,7 +260,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jc_posicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(65, 65, 65)
                 .addComponent(jb_Crearjug, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(96, Short.MAX_VALUE))
@@ -285,11 +290,11 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         jLabel12.setText("Transferencia");
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Equipos");
-        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-        jScrollPane1.setViewportView(jTree1);
+        jt_equipos.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane1.setViewportView(jt_equipos);
 
-        jList1.setModel(new DefaultListModel());
-        jScrollPane2.setViewportView(jList1);
+        jl_Jugadores.setModel(new DefaultListModel());
+        jScrollPane2.setViewportView(jl_Jugadores);
 
         jButton1.setText("Transeferencia >");
 
@@ -475,7 +480,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     private void jm_CjugadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_CjugadoresActionPerformed
        jd_Jugadores.pack();
        jd_Jugadores.setLocationRelativeTo(this);
-       jd_Equipos.setVisible(true);
+       jd_Jugadores.setVisible(true);
        
     }//GEN-LAST:event_jm_CjugadoresActionPerformed
 
@@ -486,7 +491,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_CrearjugadoresMouseClicked
 
     private void jb_CrearteamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_CrearteamActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jb_CrearteamActionPerformed
 
     private void jb_CrearjugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_CrearjugActionPerformed
@@ -494,8 +499,19 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_CrearjugActionPerformed
 
     private void jb_TransferenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_TransferenciaMouseClicked
-        // TODO add your handling code here:
+        jd_Transferir.pack();
+      jd_Transferir.setLocationRelativeTo(this);
+      jd_Transferir.setVisible(true);
     }//GEN-LAST:event_jb_TransferenciaMouseClicked
+
+    private void jb_CrearjugMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_CrearjugMouseClicked
+        DefaultListModel modelo=(DefaultListModel)jl_Jugadores.getModel();
+        modelo.addElement(new Jugador(jt_nombrej.getText(),(String)jc_posicion.getSelectedItem(),(Integer)js_Edad.getValue()));
+        jl_Jugadores.setModel(modelo);
+        jt_nombrej.setText("");
+        jc_posicion.setSelectedIndex(0);
+        js_Edad.setValue(15);
+    }//GEN-LAST:event_jb_CrearjugMouseClicked
 
     /**
      * @param args the command line arguments
@@ -534,7 +550,6 @@ public class Boroa_Legacy extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -547,7 +562,6 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -557,17 +571,17 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JTree jTree1;
     private javax.swing.JButton jb_Crearequipos;
     private javax.swing.JButton jb_Crearjug;
     private javax.swing.JButton jb_Crearjugadores;
     private javax.swing.JButton jb_Crearteam;
     private javax.swing.JButton jb_Transferencia;
+    private javax.swing.JComboBox<String> jc_posicion;
     private javax.swing.JDialog jd_Equipos;
     private javax.swing.JDialog jd_Jugadores;
     private javax.swing.JDialog jd_Transferir;
+    private javax.swing.JList<String> jl_Jugadores;
     private javax.swing.JMenuItem jm_Cequipos;
     private javax.swing.JMenuItem jm_Cjugadores;
     private javax.swing.JMenuItem jm_Transferencia;
@@ -575,6 +589,8 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     private javax.swing.JTextField jt_Ciudad;
     private javax.swing.JTextField jt_Estadio;
     private javax.swing.JTextField jt_Nombre;
+    private javax.swing.JTree jt_equipos;
+    private javax.swing.JTextField jt_nombrej;
     private javax.swing.JTextField jt_pais;
     // End of variables declaration//GEN-END:variables
 }

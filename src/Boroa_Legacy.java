@@ -515,12 +515,17 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_TransferenciaMouseClicked
 
     private void jb_CrearjugMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_CrearjugMouseClicked
+        if(numero(jt_nombrej.getText())==false){
+            JOptionPane.showMessageDialog(jd_Jugadores, "See encontro un numero");
+            jt_nombrej.setText("");
+        }else{
         DefaultListModel modelo = (DefaultListModel) jl_Jugadores.getModel();
         modelo.addElement(new Jugador(jt_nombrej.getText(), (String) jc_posicion.getSelectedItem(), (Integer) js_Edad.getValue()));
         jl_Jugadores.setModel(modelo);
         jt_nombrej.setText("");
         jc_posicion.setSelectedIndex(0);
         js_Edad.setValue(15);
+        }
     }//GEN-LAST:event_jb_CrearjugMouseClicked
 
     private void jb_CrearteamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_CrearteamMouseClicked

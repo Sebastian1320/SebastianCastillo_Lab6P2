@@ -368,6 +368,11 @@ public class Boroa_Legacy extends javax.swing.JFrame {
                 jm_ModificarMouseClicked(evt);
             }
         });
+        jm_Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_ModificarActionPerformed(evt);
+            }
+        });
         jPopupMenu1.add(jm_Modificar);
 
         jm_Eliminar.setText("Eliminar");
@@ -544,54 +549,54 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_TransferenciaMouseClicked
 
     private void jb_CrearjugMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_CrearjugMouseClicked
-        if(numero(jt_nombrej.getText())==false){
+        if (numero(jt_nombrej.getText()) == false) {
             JOptionPane.showMessageDialog(jd_Jugadores, "See encontro un numero");
             jt_nombrej.setText("");
-        }else{
-        DefaultListModel modelo = (DefaultListModel) jl_Jugadores.getModel();
-        modelo.addElement(new Jugador(jt_nombrej.getText(), (String) jc_posicion.getSelectedItem(), (Integer) js_Edad.getValue()));
-        jl_Jugadores.setModel(modelo);
-        jt_nombrej.setText("");
-        jc_posicion.setSelectedIndex(0);
-        js_Edad.setValue(15);
+        } else {
+            DefaultListModel modelo = (DefaultListModel) jl_Jugadores.getModel();
+            modelo.addElement(new Jugador(jt_nombrej.getText(), (String) jc_posicion.getSelectedItem(), (Integer) js_Edad.getValue()));
+            jl_Jugadores.setModel(modelo);
+            jt_nombrej.setText("");
+            jc_posicion.setSelectedIndex(0);
+            js_Edad.setValue(15);
         }
     }//GEN-LAST:event_jb_CrearjugMouseClicked
 
     private void jb_CrearteamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_CrearteamMouseClicked
-        int temp =0;
-        if(numero(jt_Nombre.getText())==false||numero(jt_Estadio.getText())==false||numero(jt_pais.getText())==false||numero(jt_Ciudad.getText())==false){
+        int temp = 0;
+        if (numero(jt_Nombre.getText()) == false || numero(jt_Estadio.getText()) == false || numero(jt_pais.getText()) == false || numero(jt_Ciudad.getText()) == false) {
             JOptionPane.showMessageDialog(jd_Equipos, "Hay un numero incluido");
-             jt_Nombre.setText("");
-        jt_Ciudad.setText("");
-        jt_pais.setText("");
-        jt_Estadio.setText("");
-        }else{
-        DefaultTreeModel m = (DefaultTreeModel) jT_equipos.getModel();
-        DefaultMutableTreeNode raiz=(DefaultMutableTreeNode) m.getRoot();
-        DefaultMutableTreeNode pais=new DefaultMutableTreeNode(jt_pais.getText());
-        DefaultMutableTreeNode equipo=new DefaultMutableTreeNode(new Equipos(jt_Nombre.getText(),jt_Ciudad.getText(),jt_pais.getText(),jt_Estadio.getText()));
-        for (int i = 0; i < raiz.getChildCount(); i++) {
-            if(raiz.getChildAt(i).toString().equals(jt_pais.getText())){
-             ((DefaultMutableTreeNode)raiz.getChildAt(i)).add(equipo);
-             temp=1;
-             break;
+            jt_Nombre.setText("");
+            jt_Ciudad.setText("");
+            jt_pais.setText("");
+            jt_Estadio.setText("");
+        } else {
+            DefaultTreeModel m = (DefaultTreeModel) jT_equipos.getModel();
+            DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) m.getRoot();
+            DefaultMutableTreeNode pais = new DefaultMutableTreeNode(jt_pais.getText());
+            DefaultMutableTreeNode equipo = new DefaultMutableTreeNode(new Equipos(jt_Nombre.getText(), jt_Ciudad.getText(), jt_pais.getText(), jt_Estadio.getText()));
+            for (int i = 0; i < raiz.getChildCount(); i++) {
+                if (raiz.getChildAt(i).toString().equals(jt_pais.getText())) {
+                    ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(equipo);
+                    temp = 1;
+                    break;
+                }
             }
-        }
-        if(temp==0){
-        pais.add(equipo);
-        raiz.add(pais);
-        }
-        m.reload();
-        jt_Nombre.setText("");
-        jt_Ciudad.setText("");
-        jt_pais.setText("");
-        jt_Estadio.setText("");
-        JOptionPane.showMessageDialog(jd_Equipos, "Se ha agregado con exito");
+            if (temp == 0) {
+                pais.add(equipo);
+                raiz.add(pais);
+            }
+            m.reload();
+            jt_Nombre.setText("");
+            jt_Ciudad.setText("");
+            jt_pais.setText("");
+            jt_Estadio.setText("");
+            JOptionPane.showMessageDialog(jd_Equipos, "Se ha agregado con exito");
         }
     }//GEN-LAST:event_jb_CrearteamMouseClicked
 
     private void jb_CrearequiposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_CrearequiposMouseClicked
-           jd_Equipos.pack();
+        jd_Equipos.pack();
         jd_Equipos.setLocationRelativeTo(this);
         jd_Equipos.setVisible(true);
     }//GEN-LAST:event_jb_CrearequiposMouseClicked
@@ -601,41 +606,59 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_CrearjugadoresActionPerformed
 
     private void jl_JugadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_JugadoresMouseClicked
-        if(jl_Jugadores.getSelectedIndex()>=0){
-        if(evt.getButton() ==3){
-            jPopupMenu1.show(evt.getComponent(), evt.getX(), evt.getY());
-        }
+        if (jl_Jugadores.getSelectedIndex() >= 0) {
+            if (evt.getButton() == 3) {
+                jPopupMenu1.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
         }
     }//GEN-LAST:event_jl_JugadoresMouseClicked
 
     private void jm_ModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_ModificarMouseClicked
-        DefaultListModel modelo=(DefaultListModel)jl_Jugadores.getModel();
-        String nombre=JOptionPane.showInputDialog(jd_Transferir,"Ingrese el nuevo nombre");
-          if(numero(nombre)==false){
-            JOptionPane.showMessageDialog(jd_Transferir, "Hay un numero");
-        }else{
-              ((Jugador)modelo.get(jl_Jugadores.getSelectedIndex())).setNombre(nombre);
-              
-        }
-        String edadtemp = JOptionPane.showInputDialog(jd_Transferir,"Ingrese el nuevo nombre");
-        if(caracter(edadtemp)==false){
-            JOptionPane.showMessageDialog(jd_Transferir, "Hay un caracter");
-        }else{
-            int edad=Integer.parseInt(edadtemp);
-            ((Jugador)modelo.get(jl_Jugadores.getSelectedIndex())).setEdad(edad);
-        }
-        jl_Jugadores.setModel(modelo);
+
     }//GEN-LAST:event_jm_ModificarMouseClicked
 
     private void jm_EliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jm_EliminarMouseClicked
-       DefaultListModel modelo=(DefaultListModel)jl_Jugadores.getModel();
-       modelo.remove(jl_Jugadores.getSelectedIndex());
-       jl_Jugadores.setModel(modelo);
+
     }//GEN-LAST:event_jm_EliminarMouseClicked
 
     private void jm_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_EliminarActionPerformed
-        // TODO add your handling code here:
+        if (jl_Jugadores.getSelectedIndex() >= 0) {
+            DefaultListModel modelo = (DefaultListModel) jl_Jugadores.getModel();
+            modelo.remove(jl_Jugadores.getSelectedIndex());
+            jl_Jugadores.setModel(modelo);
+        } else {
+            JOptionPane.showMessageDialog(null, "No entro");
+        }
     }//GEN-LAST:event_jm_EliminarActionPerformed
+
+    private void jm_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_ModificarActionPerformed
+        if (jl_Jugadores.getSelectedIndex() >= 0) {
+            DefaultListModel modelo = (DefaultListModel) jl_Jugadores.getModel();
+            String nombre = JOptionPane.showInputDialog(jd_Transferir, "Ingrese el nuevo nombre");
+            while (numero(nombre) == false) {
+                JOptionPane.showMessageDialog(jd_Transferir, "Hay un numero");
+                nombre = JOptionPane.showInputDialog(jd_Transferir, "Ingrese el nuevo nombre");
+            }
+            ((Jugador) modelo.get(jl_Jugadores.getSelectedIndex())).setNombre(nombre);
+
+            String edadtemp = JOptionPane.showInputDialog(jd_Transferir, "Ingrese el nuevo nombre");
+            while (caracter(edadtemp) == false) {
+                JOptionPane.showMessageDialog(jd_Transferir, "Hay un caracter");
+                edadtemp = JOptionPane.showInputDialog(jd_Transferir, "Ingrese el nuevo nombre");
+            }
+            int edad = Integer.parseInt(edadtemp);
+            while (edad < 15 || edad > 45) {
+                JOptionPane.showMessageDialog(jd_Transferir, "El numero es menor o mayor de lo que deberia");
+                edadtemp = JOptionPane.showInputDialog(jd_Transferir, "Ingrese el nuevo nombre");
+                edad = Integer.parseInt(edadtemp);
+            }
+            ((Jugador) modelo.get(jl_Jugadores.getSelectedIndex())).setEdad(edad);
+
+            jl_Jugadores.setModel(modelo);
+        } else {
+            JOptionPane.showMessageDialog(null, "No entro");
+        }
+    }//GEN-LAST:event_jm_ModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -671,7 +694,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
             }
         });
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -721,22 +744,23 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     private javax.swing.JTextField jt_nombrej;
     private javax.swing.JTextField jt_pais;
     // End of variables declaration//GEN-END:variables
-    public boolean numero(String cadena){
-        Pattern pattern =Pattern.compile("^.*\\d.*$");
-        Matcher matcher=pattern.matcher(cadena);
-        if(matcher.find()){
+    public boolean numero(String cadena) {
+        Pattern pattern = Pattern.compile("^.*\\d.*$");
+        Matcher matcher = pattern.matcher(cadena);
+        if (matcher.find()) {
             return false;
         }
         return true;
     }
-    public boolean caracter(String edad){
-        Pattern pattern =Pattern.compile("^\\d+$");
-        Matcher matcher=pattern.matcher(edad);
-        if(matcher.find()){
-            return false;
+
+    public boolean caracter(String edad) {
+        Pattern pattern = Pattern.compile("^\\d+$");
+        Matcher matcher = pattern.matcher(edad);
+        if (matcher.find()) {
+            return true;
         }
-        return true;
+        return false;
     }
     DefaultMutableTreeNode nodo_seleccionado;
- Equipos equipo_selec;   
+    Equipos equipo_selec;
 }

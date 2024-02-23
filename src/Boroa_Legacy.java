@@ -7,7 +7,13 @@
  *
  * @author Asus
  */
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
 public class Boroa_Legacy extends javax.swing.JFrame {
 
     /**
@@ -53,7 +59,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jt_equipos = new javax.swing.JTree();
+        jT_equipos = new javax.swing.JTree();
         jScrollPane2 = new javax.swing.JScrollPane();
         jl_Jugadores = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
@@ -99,6 +105,11 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         jb_Crearteam.setForeground(new java.awt.Color(0, 0, 0));
         jb_Crearteam.setText("Agregar");
         jb_Crearteam.setBorder(null);
+        jb_Crearteam.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_CrearteamMouseClicked(evt);
+            }
+        });
         jb_Crearteam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_CrearteamActionPerformed(evt);
@@ -290,8 +301,8 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         jLabel12.setText("Transferencia");
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Equipos");
-        jt_equipos.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-        jScrollPane1.setViewportView(jt_equipos);
+        jT_equipos.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane1.setViewportView(jT_equipos);
 
         jl_Jugadores.setModel(new DefaultListModel());
         jScrollPane2.setViewportView(jl_Jugadores);
@@ -368,9 +379,9 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         jb_Crearequipos.setFocusable(false);
         jb_Crearequipos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jb_Crearequipos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jb_Crearequipos.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jb_CrearequiposKeyPressed(evt);
+        jb_Crearequipos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_CrearequiposMouseClicked(evt);
             }
         });
         jToolBar1.add(jb_Crearequipos);
@@ -385,6 +396,11 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         jb_Crearjugadores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jb_CrearjugadoresMouseClicked(evt);
+            }
+        });
+        jb_Crearjugadores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_CrearjugadoresActionPerformed(evt);
             }
         });
         jToolBar1.add(jb_Crearjugadores);
@@ -460,9 +476,9 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jm_TransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_TransferenciaActionPerformed
-      jd_Transferir.pack();
-      jd_Transferir.setLocationRelativeTo(this);
-      jd_Transferir.setVisible(true);
+        jd_Transferir.pack();
+        jd_Transferir.setLocationRelativeTo(this);
+        jd_Transferir.setVisible(true);
     }//GEN-LAST:event_jm_TransferenciaActionPerformed
 
     private void jm_CequiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_CequiposActionPerformed
@@ -471,23 +487,17 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         jd_Equipos.setVisible(true);
     }//GEN-LAST:event_jm_CequiposActionPerformed
 
-    private void jb_CrearequiposKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jb_CrearequiposKeyPressed
-        jd_Equipos.pack();
-        jd_Equipos.setLocationRelativeTo(this);
-        jd_Equipos.setVisible(true);
-    }//GEN-LAST:event_jb_CrearequiposKeyPressed
-
     private void jm_CjugadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_CjugadoresActionPerformed
-       jd_Jugadores.pack();
-       jd_Jugadores.setLocationRelativeTo(this);
-       jd_Jugadores.setVisible(true);
-       
+        jd_Jugadores.pack();
+        jd_Jugadores.setLocationRelativeTo(this);
+        jd_Jugadores.setVisible(true);
+
     }//GEN-LAST:event_jm_CjugadoresActionPerformed
 
     private void jb_CrearjugadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_CrearjugadoresMouseClicked
-       jd_Jugadores.pack();
-       jd_Jugadores.setLocationRelativeTo(this);
-       jd_Equipos.setVisible(true);
+        jd_Jugadores.pack();
+        jd_Jugadores.setLocationRelativeTo(this);
+        jd_Jugadores.setVisible(true);
     }//GEN-LAST:event_jb_CrearjugadoresMouseClicked
 
     private void jb_CrearteamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_CrearteamActionPerformed
@@ -500,18 +510,61 @@ public class Boroa_Legacy extends javax.swing.JFrame {
 
     private void jb_TransferenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_TransferenciaMouseClicked
         jd_Transferir.pack();
-      jd_Transferir.setLocationRelativeTo(this);
-      jd_Transferir.setVisible(true);
+        jd_Transferir.setLocationRelativeTo(this);
+        jd_Transferir.setVisible(true);
     }//GEN-LAST:event_jb_TransferenciaMouseClicked
 
     private void jb_CrearjugMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_CrearjugMouseClicked
-        DefaultListModel modelo=(DefaultListModel)jl_Jugadores.getModel();
-        modelo.addElement(new Jugador(jt_nombrej.getText(),(String)jc_posicion.getSelectedItem(),(Integer)js_Edad.getValue()));
+        DefaultListModel modelo = (DefaultListModel) jl_Jugadores.getModel();
+        modelo.addElement(new Jugador(jt_nombrej.getText(), (String) jc_posicion.getSelectedItem(), (Integer) js_Edad.getValue()));
         jl_Jugadores.setModel(modelo);
         jt_nombrej.setText("");
         jc_posicion.setSelectedIndex(0);
         js_Edad.setValue(15);
     }//GEN-LAST:event_jb_CrearjugMouseClicked
+
+    private void jb_CrearteamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_CrearteamMouseClicked
+        int temp =0;
+        if(numero(jt_Nombre.getText())==false||numero(jt_Estadio.getText())==false||numero(jt_pais.getText())==false||numero(jt_Ciudad.getText())==false){
+            JOptionPane.showMessageDialog(jd_Equipos, "Hay un numero incluido");
+             jt_Nombre.setText("");
+        jt_Ciudad.setText("");
+        jt_pais.setText("");
+        jt_Estadio.setText("");
+        }else{
+        DefaultTreeModel m = (DefaultTreeModel) jT_equipos.getModel();
+        DefaultMutableTreeNode raiz=(DefaultMutableTreeNode) m.getRoot();
+        DefaultMutableTreeNode pais=new DefaultMutableTreeNode(jt_pais.getText());
+        DefaultMutableTreeNode equipo=new DefaultMutableTreeNode(new Equipos(jt_Nombre.getText(),jt_Ciudad.getText(),jt_pais.getText(),jt_Estadio.getText()));
+        for (int i = 0; i < raiz.getChildCount(); i++) {
+            if(raiz.getChildAt(i).toString().equals(jt_pais.getText())){
+             ((DefaultMutableTreeNode)raiz.getChildAt(i)).add(equipo);
+             temp=1;
+             break;
+            }
+        }
+        if(temp==0){
+        pais.add(equipo);
+        raiz.add(pais);
+        }
+        m.reload();
+        jt_Nombre.setText("");
+        jt_Ciudad.setText("");
+        jt_pais.setText("");
+        jt_Estadio.setText("");
+        JOptionPane.showMessageDialog(jd_Equipos, "Se ha agregado con exito");
+        }
+    }//GEN-LAST:event_jb_CrearteamMouseClicked
+
+    private void jb_CrearequiposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_CrearequiposMouseClicked
+           jd_Equipos.pack();
+        jd_Equipos.setLocationRelativeTo(this);
+        jd_Equipos.setVisible(true);
+    }//GEN-LAST:event_jb_CrearequiposMouseClicked
+
+    private void jb_CrearjugadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_CrearjugadoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_CrearjugadoresActionPerformed
 
     /**
      * @param args the command line arguments
@@ -547,6 +600,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -571,6 +625,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTree jT_equipos;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton jb_Crearequipos;
     private javax.swing.JButton jb_Crearjug;
@@ -589,8 +644,19 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     private javax.swing.JTextField jt_Ciudad;
     private javax.swing.JTextField jt_Estadio;
     private javax.swing.JTextField jt_Nombre;
-    private javax.swing.JTree jt_equipos;
     private javax.swing.JTextField jt_nombrej;
     private javax.swing.JTextField jt_pais;
     // End of variables declaration//GEN-END:variables
+    public boolean numero(String cadena){
+        Pattern pattern =Pattern.compile("^.*\\d.*$");
+        Matcher matcher=pattern.matcher(cadena);
+        if(matcher.find()){
+            return false;
+        }
+        return true;
+    }
+     //"^\\d+$" regex letras
+    DefaultMutableTreeNode nodo_seleccionado;
+ Jugador jugador_selec;
+ Equipos equipo_selec;   
 }

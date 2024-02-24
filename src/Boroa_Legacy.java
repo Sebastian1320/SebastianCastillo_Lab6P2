@@ -13,6 +13,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
 
 public class Boroa_Legacy extends javax.swing.JFrame {
 
@@ -63,9 +64,11 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jl_Jugadores = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
-        jPopupMenu1 = new javax.swing.JPopupMenu();
+        pp_lista = new javax.swing.JPopupMenu();
         jm_Modificar = new javax.swing.JMenuItem();
         jm_Eliminar = new javax.swing.JMenuItem();
+        pp_arbol = new javax.swing.JPopupMenu();
+        Eliminar = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -305,6 +308,11 @@ public class Boroa_Legacy extends javax.swing.JFrame {
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Equipos");
         jT_equipos.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jT_equipos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jT_equiposMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jT_equipos);
 
         jl_Jugadores.setModel(new DefaultListModel());
@@ -378,7 +386,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
                 jm_ModificarActionPerformed(evt);
             }
         });
-        jPopupMenu1.add(jm_Modificar);
+        pp_lista.add(jm_Modificar);
 
         jm_Eliminar.setText("Eliminar");
         jm_Eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -391,7 +399,20 @@ public class Boroa_Legacy extends javax.swing.JFrame {
                 jm_EliminarActionPerformed(evt);
             }
         });
-        jPopupMenu1.add(jm_Eliminar);
+        pp_lista.add(jm_Eliminar);
+
+        Eliminar.setText("Eliminar");
+        Eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                EliminarMouseClicked(evt);
+            }
+        });
+        Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EliminarActionPerformed(evt);
+            }
+        });
+        pp_arbol.add(Eliminar);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 255, 255));
@@ -564,6 +585,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
             jt_nombrej.setText("");
             jc_posicion.setSelectedIndex(0);
             js_Edad.setValue(15);
+            JOptionPane.showMessageDialog(null, "Jugador agregado con exito");
         }
     }//GEN-LAST:event_jb_CrearjugMouseClicked
 
@@ -581,10 +603,9 @@ public class Boroa_Legacy extends javax.swing.JFrame {
             DefaultMutableTreeNode pais = new DefaultMutableTreeNode(jt_pais.getText());
             DefaultMutableTreeNode equipo = new DefaultMutableTreeNode(new Equipos(jt_Nombre.getText(), jt_Ciudad.getText(), jt_pais.getText(), jt_Estadio.getText()));
             for (int i = 0; i < raiz.getChildCount(); i++) {
-                if (raiz.getChildAt(i).toString().equals(jt_pais.getText())) {
+                if (raiz.getChildAt(i).toString().equals(pais.toString())) {
                     ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(equipo);
                     temp = 1;
-                    break;
                 }
             }
             if (temp == 0) {
@@ -613,7 +634,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     private void jl_JugadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_JugadoresMouseClicked
         if (jl_Jugadores.getSelectedIndex() >= 0) {
             if (evt.getButton() == 3) {
-                jPopupMenu1.show(evt.getComponent(), evt.getX(), evt.getY());
+                pp_lista.show(evt.getComponent(), evt.getX(), evt.getY());
             }
         }
     }//GEN-LAST:event_jl_JugadoresMouseClicked
@@ -667,34 +688,67 @@ public class Boroa_Legacy extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         int temp = 0;
-        if(jl_Jugadores.getSelectedIndex()>=0&&jT_equipos.getSelectionPath()!=null){
-        Object v1= jT_equipos.getSelectionPath().getLastPathComponent();
-        nodo_seleccionado = (DefaultMutableTreeNode) v1;
-        DefaultListModel modelo = (DefaultListModel) jl_Jugadores.getModel();
-        DefaultTreeModel m = (DefaultTreeModel) jT_equipos.getModel();
-        jugador_selc=(Jugador)modelo.getElementAt(jl_Jugadores.getSelectedIndex());
-        if (nodo_seleccionado.getUserObject() instanceof Equipos ) {
-            for (int i = 0; i < nodo_seleccionado.getChildCount(); i++) {
-                 DefaultMutableTreeNode p = (DefaultMutableTreeNode)nodo_seleccionado.getChildAt(i);
-                if (nodo_seleccionado.getChildAt(i).toString().equals(jugador_selc.getPosicion())) {
-                    DefaultMutableTreeNode j=new DefaultMutableTreeNode (jugador_selc);                 
-                    temp++;
-                    break;
+        if (jl_Jugadores.getSelectedIndex() >= 0 && jT_equipos.getSelectionPath() != null) {
+            Object v1 = jT_equipos.getSelectionPath().getLastPathComponent();
+            nodo_seleccionado = (DefaultMutableTreeNode) v1;
+            DefaultListModel modelo = (DefaultListModel) jl_Jugadores.getModel();
+            DefaultTreeModel m = (DefaultTreeModel) jT_equipos.getModel();
+            jugador_selc = (Jugador) modelo.getElementAt(jl_Jugadores.getSelectedIndex());
+            if (nodo_seleccionado.getUserObject() instanceof Equipos) {
+                for (int i = 0; i < nodo_seleccionado.getChildCount(); i++) {
+                    DefaultMutableTreeNode p = (DefaultMutableTreeNode) nodo_seleccionado.getChildAt(i);
+                    if (nodo_seleccionado.getChildAt(i).toString().equals(jugador_selc.getPosicion())) {
+                        DefaultMutableTreeNode j = new DefaultMutableTreeNode(jugador_selc);
+                        temp++;
+                        break;
+                    }
                 }
+                if (temp == 0) {
+                    DefaultMutableTreeNode p = new DefaultMutableTreeNode(jugador_selc.getPosicion());
+                    DefaultMutableTreeNode j = new DefaultMutableTreeNode(jugador_selc);
+                    p.add(j);
+                    nodo_seleccionado.add(p);
+                }
+                JOptionPane.showMessageDialog(null, "Jugador transferido con exito");
+                m.reload(nodo_seleccionado);
             }
-            if (temp == 0) {
-                DefaultMutableTreeNode p = new DefaultMutableTreeNode(jugador_selc.getPosicion());
-                DefaultMutableTreeNode j = new DefaultMutableTreeNode(jugador_selc);
-                p.add(j);
-                nodo_seleccionado.add(p);
-            }
-            JOptionPane.showMessageDialog(null, "Jugador transferido con exito");
-            m.reload(nodo_seleccionado);
-        }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No tiene selecionado o en el arbol o en la lista");
         }
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void EliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EliminarMouseClicked
+        
+    }//GEN-LAST:event_EliminarMouseClicked
+
+    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
+
+        if (jT_equipos.getSelectionPath() != null) {
+            Object v1 = jT_equipos.getSelectionPath().getLastPathComponent();
+            nodo_seleccionado = (DefaultMutableTreeNode) v1;
+            if (nodo_seleccionado.getUserObject() instanceof Equipos) {
+                DefaultTreeModel m = (DefaultTreeModel) jT_equipos.getModel();
+                m.removeNodeFromParent((MutableTreeNode) jT_equipos.getLastSelectedPathComponent());
+                m.reload();
+            } else {
+                JOptionPane.showMessageDialog(null, "No selecciono un equipo");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No tiene nada seleccionado");
+        }
+    }//GEN-LAST:event_EliminarActionPerformed
+
+    private void jT_equiposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jT_equiposMouseClicked
+        if (evt.getButton() == 3) {
+             if (evt.isMetaDown()) {
+            //seleccionar un nodo con click derecho
+            int row = jT_equipos.getClosestRowForLocation(
+                    evt.getX(), evt.getY());
+            jT_equipos.setSelectionRow(row);
+            pp_arbol.show(evt.getComponent(), evt.getX(), evt.getY());
+             }
+        }
+    }//GEN-LAST:event_jT_equiposMouseClicked
 
     /**
      * @param args the command line arguments
@@ -733,6 +787,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Eliminar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -753,7 +808,6 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTree jT_equipos;
@@ -779,6 +833,8 @@ public class Boroa_Legacy extends javax.swing.JFrame {
     private javax.swing.JTextField jt_Nombre;
     private javax.swing.JTextField jt_nombrej;
     private javax.swing.JTextField jt_pais;
+    private javax.swing.JPopupMenu pp_arbol;
+    private javax.swing.JPopupMenu pp_lista;
     // End of variables declaration//GEN-END:variables
     public boolean numero(String cadena) {
         Pattern pattern = Pattern.compile("^.*\\d.*$");

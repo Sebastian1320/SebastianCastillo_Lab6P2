@@ -699,6 +699,7 @@ public class Boroa_Legacy extends javax.swing.JFrame {
                     DefaultMutableTreeNode p = (DefaultMutableTreeNode) nodo_seleccionado.getChildAt(i);
                     if (nodo_seleccionado.getChildAt(i).toString().equals(jugador_selc.getPosicion())) {
                         DefaultMutableTreeNode j = new DefaultMutableTreeNode(jugador_selc);
+                        p.add(j);
                         temp++;
                         break;
                     }

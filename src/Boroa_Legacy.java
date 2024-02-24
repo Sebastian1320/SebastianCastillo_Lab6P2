@@ -316,6 +316,11 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jl_Jugadores);
 
         jButton1.setText("Transeferencia >");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -660,6 +665,37 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jm_ModificarActionPerformed
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        int temp = 0;
+        if(jl_Jugadores.getSelectedIndex()>=0&&jT_equipos.getSelectionPath()!=null){
+        Object v1= jT_equipos.getSelectionPath().getLastPathComponent();
+        nodo_seleccionado = (DefaultMutableTreeNode) v1;
+        DefaultListModel modelo = (DefaultListModel) jl_Jugadores.getModel();
+        DefaultTreeModel m = (DefaultTreeModel) jT_equipos.getModel();
+        jugador_selc=(Jugador)modelo.getElementAt(jl_Jugadores.getSelectedIndex());
+        if (nodo_seleccionado.getUserObject() instanceof Equipos ) {
+            for (int i = 0; i < nodo_seleccionado.getChildCount(); i++) {
+                 DefaultMutableTreeNode p = (DefaultMutableTreeNode)nodo_seleccionado.getChildAt(i);
+                if (nodo_seleccionado.getChildAt(i).toString().equals(jugador_selc.getPosicion())) {
+                    DefaultMutableTreeNode j=new DefaultMutableTreeNode (jugador_selc);                 
+                    temp++;
+                    break;
+                }
+            }
+            if (temp == 0) {
+                DefaultMutableTreeNode p = new DefaultMutableTreeNode(jugador_selc.getPosicion());
+                DefaultMutableTreeNode j = new DefaultMutableTreeNode(jugador_selc);
+                p.add(j);
+                nodo_seleccionado.add(p);
+            }
+            JOptionPane.showMessageDialog(null, "Jugador transferido con exito");
+            m.reload(nodo_seleccionado);
+        }
+        }else{
+            JOptionPane.showMessageDialog(null, "No tiene selecionado o en el arbol o en la lista");
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -762,5 +798,5 @@ public class Boroa_Legacy extends javax.swing.JFrame {
         return false;
     }
     DefaultMutableTreeNode nodo_seleccionado;
-    Equipos equipo_selec;
+    Jugador jugador_selc;
 }
